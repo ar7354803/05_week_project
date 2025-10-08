@@ -1,0 +1,134 @@
+# Base class with abstract method
+class Vehicle:
+    def __init__(self, name, speed, capacity):
+        self.name = name
+        self.speed = speed
+        self.capacity = capacity
+    
+    def move(self):
+        # This will be overridden by child classes
+        raise NotImplementedError("Subclasses must implement move() method")
+    
+    def get_info(self):
+        return f"{self.name} | Speed: {self.speed} | Capacity: {self.capacity}"
+
+# Derived classes with polymorphic move() methods
+class Car(Vehicle):
+    def __init__(self, name, speed, capacity, fuel_type, horsepower):
+        super().__init__(name, speed, capacity)
+        self.fuel_type = fuel_type
+        self.horsepower = horsepower
+    
+    def move(self):
+        return f"🚗 {self.name} is driving on the road at {self.speed} mph! Vroom vroom!"
+    
+    def honk(self):
+        return "🔊 Beep beep!"
+
+class Plane(Vehicle):
+    def __init__(self, name, speed, capacity, wingspan, altitude):
+        super().__init__(name, speed, capacity)
+        self.wingspan = wingspan
+        self.altitude = altitude
+    
+    def move(self):
+        return f"✈️ {self.name} is flying at {self.speed} mph, cruising at {self.altitude} feet!"
+    
+    def take_off(self):
+        return "🛫 Preparing for takeoff! Fasten your seatbelts!"
+
+class Boat(Vehicle):
+    def __init__(self, name, speed, capacity, boat_type, displacement):
+        super().__init__(name, speed, capacity)
+        self.boat_type = boat_type
+        self.displacement = displacement
+    
+    def move(self):
+        return f"🚢 {self.name} is sailing through the water at {self.speed} knots! Anchor's away!"
+    
+    def anchor(self):
+        return "⚓ Dropping anchor!"
+
+class Bicycle(Vehicle):
+    def __init__(self, name, speed, capacity, gears, bike_type):
+        super().__init__(name, speed, capacity)
+        self.gears = gears
+        self.bike_type = bike_type
+    
+    def move(self):
+        return f"🚴 {self.name} is pedaling along at {self.speed} mph! Ring ring!"
+    
+    def ring_bell(self):
+        return "🔔 Ring ring! Watch out!"
+
+# Demonstrating polymorphism in action
+def vehicle_parade(vehicles):
+    """This function demonstrates polymorphism - it works with any Vehicle type!"""
+    print("\n" + "="*50)
+    print("🚦 VEHICLE PARADE STARTING! 🚦")
+    print("="*50)
+    
+    for vehicle in vehicles:
+        print(f"\n{vehicle.get_info()}")
+        print(vehicle.move())  # Polymorphic call - same method, different behaviors!
+        
+        # Type-specific methods
+        if isinstance(vehicle, Car):
+            print(vehicle.honk())
+        elif isinstance(vehicle, Plane):
+            print(vehicle.take_off())
+        elif isinstance(vehicle, Boat):
+            print(vehicle.anchor())
+        elif isinstance(vehicle, Bicycle):
+            print(vehicle.ring_bell())
+
+# Main program to demonstrate both activities
+if __name__ == "__main__":
+    print("🌟 ACTIVITY 1: SUPERHERO CLASS DEMONSTRATION 🌟")
+    print("="*55)
+    
+    # Create superhero instances
+    iron_man = TechHero("Iron Man", "Tony Stark", 95, 
+                       ["Repulsor Rays", "Jericho Missiles", "Unibeam"], 
+                       "J.A.R.V.I.S.")
+    
+    dr_strange = MagicHero("Doctor Strange", "Stephen Strange", 90,
+                          ["Eldritch Whip", "Shields of Seraphim", "Time Manipulation"],
+                          85)
+    
+    # Demonstrate superhero functionality
+    heroes = [iron_man, dr_strange]
+    
+    for hero in heroes:
+        print(f"\n{hero.introduce()}")
+        print(hero.use_power())  # Polymorphism - same method, different results!
+        print(hero.complete_mission())
+        
+        # Type-specific actions
+        if isinstance(hero, TechHero):
+            print(hero.develop_new_gadget("Nanotech Armor"))
+        elif isinstance(hero, MagicHero):
+            print(hero.learn_spell("Portal Creation"))
+    
+    print("\n🌟 ACTIVITY 2: POLYMORPHISM CHALLENGE - VEHICLES 🌟")
+    print("="*60)
+    
+    # Create various vehicle instances
+    sports_car = Car("Ferrari", 200, 2, "Gasoline", 700)
+    jumbo_jet = Plane("Boeing 747", 570, 416, 211, 35000)
+    cruise_ship = Boat("Royal Caribbean", 24, 6680, "Cruise Ship", 100000)
+    mountain_bike = Bicycle("Trek", 15, 1, 21, "Mountain Bike")
+    
+    # Create a list of different vehicles
+    vehicles = [sports_car, jumbo_jet, cruise_ship, mountain_bike]
+    
+    # Demonstrate polymorphism
+    vehicle_parade(vehicles)
+    
+    # Additional demonstration: Using the move() method polymorphically
+    print("\n" + "="*50)
+    print("🔄 POLYMORPHIC MOVEMENT DEMONSTRATION 🔄")
+    print("="*50)
+    
+    for i, vehicle in enumerate(vehicles, 1):
+        print(f"{i}. {vehicle.move()}")
